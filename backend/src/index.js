@@ -4,7 +4,7 @@ import cors from 'cors'
 import userRoutes from '../routes/userRoutes';
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000
 //definir trafego
 app.use(express.json());
 
@@ -14,8 +14,10 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 //define routes
 app.use('/users', userRoutes);
 
+//static files
+app.use(express.static('public'));
 
 
 app.listen(port, () => {
-    console.log('Aplicação rodando');
+    console.log(`app rodando na ${port}`);
 })

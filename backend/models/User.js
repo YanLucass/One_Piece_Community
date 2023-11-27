@@ -1,18 +1,28 @@
 import pool from "../db/conn";
 
 class User {
-    constructor(name, email, password) {
+    constructor(name, email, password, image) {
         this.name = name;
         this.email = email;
         this.password = password
+        this.image = image;
     }
     
     static async save(user) {
         try {
-            const {name, email, password } = user;
-            const query = `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`
-            await pool.query(query, [name, email, password]); 
-        } 
+            const { name, email, password, image } = user;
+            let query, values;
+        
+            if (image) {
+                query = `INSERT INTO users (name, email, password, image) VALUES ($1, $2, $3, $4)`;
+                values = [name, email, password, image];
+            } else {
+                query = `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`;
+                values = [name, email, password];
+            }
+        
+            await pool.query(query, values);
+        }
         catch(err) {
             console.log(err);
         }

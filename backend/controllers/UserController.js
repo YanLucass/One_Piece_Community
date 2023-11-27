@@ -1,10 +1,13 @@
 //models
 import User from '../models/User';
+
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import createUserToken from '../helpers/create-user-token';
 
 class UserController {
     
+    //create a user
     static async register(req, res) {
         const {name, email, password, confirmPassword} = req.body;
 
@@ -18,7 +21,6 @@ class UserController {
             res.status(422).json({message: "O email é obrigatório"});
             return;
         }
-
 
         if(!password) {
             res.status(422).json({message: "a senha é obrigatória"});
@@ -53,18 +55,25 @@ class UserController {
             name, email, 
             password: hashedPassword
         }
-
-        console.log(user);
-
+        if(req.file) {
+            user.image = req.file.filename;
+        }
+      
+        
+        
         try {
             const newUser = await User.save(user);
-            res.status(200).json({message: "Usuario cadastrado com sucesso!", newUser});
+            const token = await createUserToken(user,req, res);
 
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Erro ao salvar o usuario!"});            
         }
+        return
+    }
 
+    static async oi(req, res) {
+        res.send('oi');
     }
 }
 export default UserController;
