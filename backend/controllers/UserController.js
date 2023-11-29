@@ -58,13 +58,12 @@ class UserController {
         if(req.file) {
             user.image = req.file.filename;
         }
-      
-        
-        
+          
         try {
             const newUser = await User.save(user);
+            console.log(newUser);
             const token = await createUserToken(user,req, res);
-
+          
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Erro ao salvar o usuario!"});            
@@ -72,8 +71,8 @@ class UserController {
         return
     }
 
-    static async oi(req, res) {
-        res.send('oi');
-    }
+   static async editUser(req, res) {
+      res.send('sera');  
+   }
 }
 export default UserController;

@@ -21,7 +21,8 @@ class User {
                 values = [name, email, password];
             }
         
-            await pool.query(query, values);
+           await pool.query(query, values);
+          
         }
         catch(err) {
             console.log(err);
