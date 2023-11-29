@@ -70,7 +70,35 @@ class UserController {
         }
         return
     }
+    
+    static async login(req, res) {
 
+        const {email, password} = req.body;
+        if(!email) {
+            res.status(201).json({message: "Email obrigatório!"});
+            return;
+        }
+
+        if(!password) {
+            res.status(201).json({message: "Senha obrigatória!"});
+            return;
+        }
+
+        const user = await User.findUserByEmail(email);
+        
+        const checkPassword = await bcrypt.compare(password, user[0].password);
+
+        if(!checkPassword) {
+            res.status(201).json({message: "Senha incorreta!"});
+            return;
+        }
+
+        if(user.length === 0) {
+            res.status(201).json({message: "Esse email não existe no sistema!"});
+            return;
+        }
+
+    }
    static async editUser(req, res) {
       res.send('sera');  
    }

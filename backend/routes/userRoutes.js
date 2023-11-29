@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/register', imageUpload.single("image"), UserController.register);
 router.patch('/edit/:id', checkToken, UserController.editUser);
+router.post('/login', UserController.login);
 
 
 export default router;
