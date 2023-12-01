@@ -60,8 +60,7 @@ class UserController {
         }
           
         try {
-            const newUser = await User.save(user);
-            console.log(newUser);
+            await User.save(user);
             const token = await createUserToken(user,req, res);
           
         } catch (error) {
@@ -70,7 +69,8 @@ class UserController {
         }
         return
     }
-    
+
+    //login
     static async login(req, res) {
 
         const {email, password} = req.body;
@@ -84,21 +84,33 @@ class UserController {
             return;
         }
 
+
         const user = await User.findUserByEmail(email);
+
+          //if don't exists this email
+          if(user.length === 0) {
+            res.status(201).json({message: "Esse email não existe no sistema!"});
+            return; 
+        }
         
+        //check if passwords matchs
         const checkPassword = await bcrypt.compare(password, user[0].password);
 
         if(!checkPassword) {
             res.status(201).json({message: "Senha incorreta!"});
             return;
         }
-
-        if(user.length === 0) {
-            res.status(201).json({message: "Esse email não existe no sistema!"});
+     
+        try {
+            const currentUser = await createUserToken(user, req, res);
             return;
+        } catch(err) {
+            return res.status(500).json({message: "Ocorreu um erro tente novamente mais tarde!"});
         }
 
     }
+
+    //edit user
    static async editUser(req, res) {
       res.send('sera');  
    }

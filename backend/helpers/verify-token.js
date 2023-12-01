@@ -19,10 +19,12 @@ const checkToken = (req, res, next) => {
 
     try {
         //decoded token to keep session 
-        const decoded = jwt.verify(token, process.env.SECRET);
+        const decodedUser = jwt.verify(token, process.env.SECRET);
+        req.user = decodedUser;
+        next();
     } 
     catch(err) {
-        res.status(400).json({message: "Token inválido!"});
+        return res.status(400).json({message: "Token inválido!"});
     }
 }
 
