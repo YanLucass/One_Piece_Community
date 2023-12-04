@@ -8,8 +8,7 @@ const checkToken = (req, res, next) => {
         return res.status(401).json({message: "Acesso negado!"});
     }
 
-    const token = getToken;
-    console.log(token);
+    const token = getToken(req);
 
     //token invalid
     if(!token) {

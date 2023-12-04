@@ -33,9 +33,53 @@ class User {
         try {
             const query = `SELECT * FROM users WHERE email = $1`;
             const result = await pool.query(query, [email]);
-            return result.rows;
+            if(result.rows.length > 0) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
         } 
         catch(err) {
+            console.log('Erro ao buscar por email', err);
+            throw new Error("Erro ao buscar por email");
+
+        }
+    }
+
+    static async findUserById(id) {
+        try {
+            const sqlQuery = `SELECT * FROM users WHERE id = $1`;
+            const result = await pool.query(sqlQuery, [id])
+            if(result.rows.length > 0) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
+        } 
+        catch(err) {
+            console.error("Erro ao buscar por id", err);
+            throw new Error("Teve um erro ao buscar por id");
+        }
+    }
+
+    static async updateUserById(userDataUpdate) {
+        try {
+            let query = '';
+            let values = [];
+
+            if(userDataUpdate.image) {
+                query = `UPDATE users SET name = $1, email = $2, password = $3, image = $4 WHERE id = $5`;
+                const { name, email, password, image, id} = userDataUpdate;
+                values = [name, email, password, image, id];
+            } else {
+                query = `UPDATE users SET name = $1, email = $2, password = $3`
+                const { name, email, password} = userDataUpdate;
+                values = [name, email, password];
+            }
+
+            await pool.query(query, values);
+            
+        } catch(err) {
             console.log(err);
         }
     }
