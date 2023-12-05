@@ -2,8 +2,10 @@
 import User from '../models/User';
 
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt, { genSalt } from 'bcrypt'
 import createUserToken from '../helpers/create-user-token';
+import getToken from '../helpers/get-token';
+import getUserByToken from '../helpers/getUser-by-token';
 
 class UserController {
     
@@ -34,9 +36,10 @@ class UserController {
         
         //check if email exists
         const userEmail = await User.findUserByEmail(email); //receives the array of result lines
+        console.log(userEmail);
         
         //if result lines greater than zero
-        if(userEmail.length > 0) {
+        if(userEmail) {
             res.status(422).json({message: "Por favor escolha outro email!"});
             return;
         }
@@ -61,7 +64,7 @@ class UserController {
           
         try {
             await User.save(user);
-            const token = await createUserToken(user,req, res);
+            const token = await createUserToken(user, req, res);
           
         } catch (error) {
             console.log(error);
@@ -74,18 +77,20 @@ class UserController {
     static async login(req, res) {
 
         const {email, password} = req.body;
+
         if(!email) {
-            res.status(201).json({message: "Email obrigatório!"});
+            res.status(422).json({message: "Email obrigatório!"});
             return;
         }
 
         if(!password) {
-            res.status(201).json({message: "Senha obrigatória!"});
+            res.status(422).json({message: "Senha obrigatória!"});
             return;
         }
 
 
         const user = await User.findUserByEmail(email);
+
 
           //if don't exists this email
           if(user.length === 0) {
@@ -94,16 +99,16 @@ class UserController {
         }
         
         //check if passwords matchs
-        const checkPassword = await bcrypt.compare(password, user[0].password);
+        const checkPassword = await bcrypt.compare(password, user.password);
 
         if(!checkPassword) {
             res.status(201).json({message: "Senha incorreta!"});
             return;
         }
-     
+         
         try {
-            const currentUser = await createUserToken(user, req, res);
-            return;
+            const token = await createUserToken(user, req, res);
+        
         } catch(err) {
             return res.status(500).json({message: "Ocorreu um erro tente novamente mais tarde!"});
         }
@@ -111,8 +116,61 @@ class UserController {
     }
 
     //edit user
-   static async editUser(req, res) {
-      res.send('sera');  
+   static async editUser(req, res) {   
+    
+        const { name, email, password, confirmPassword} = req.body;
+        let image = ''; // to multer case user don't provider a photo
+         
+        const token = getToken(req);
+        const user = await getUserByToken(token)
+
+
+        if(req.file) {
+           user.image = req.file.filename;
+        }
+        
+        if(!name) {
+            res.status(422).json({message: "Nomeeee obrigatório!"});
+            return;
+        }
+
+        user.name = name;
+
+        if(!email) {
+            res.status(422).json({message: "Email obrigatório!"});
+            return;
+        }
+
+        //check if email belongs an another user
+        const emailOwnerUser = await User.findUserByEmail(email);
+
+        if(user.email !== email && emailOwnerUser) {
+            res.status(422).json({message: "Por favor utilize outro email!"});
+            return;
+        }
+
+        user.email = email;
+
+        //password matchs?
+        if(password != confirmPassword) {
+            res.status(422).json({message: "As senhas devem ser iguais"});
+            return;
+        
+        //users wants to change password!
+        } else if(password !== undefined) {
+            const salt = await bcrypt.genSalt(12);
+            const newPassword = await bcrypt.hash(password, salt);
+            user.password = newPassword;
+        }
+
+        try {
+            await User.updateUserById(user)
+            res.status(200).json({message: "Usuario atualizado!", user});
+        }
+        catch(err) {
+            console.log(err);
+        }
+
    }
 }
 export default UserController;

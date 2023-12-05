@@ -4,8 +4,9 @@ import cors from 'cors'
 import userRoutes from '../routes/userRoutes';
 
 const app = express();
-const port = 5000
+const port = 5000;
 //definir trafego
+
 app.use(express.json());
 
 //Resolver problema do cors

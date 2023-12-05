@@ -5,7 +5,7 @@ import checkToken from '../helpers/verify-token';
 const router = express.Router();
 
 router.post('/register', imageUpload.single("image"), UserController.register);
-router.patch('/edit/:id', checkToken, UserController.editUser);
+router.patch('/edit/:id', checkToken, imageUpload.single("image"), UserController.editUser);
 router.post('/login', UserController.login);
 
 
