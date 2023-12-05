@@ -15,6 +15,7 @@ pool.connect((error, client) => {
   if (error) {
     console.error('Erro ao se conectar com o PostgreSQL:', error.message);
   } else {
+    // Apenas para testes com ElephantSQL
     const createTableQuery = `
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -24,6 +25,15 @@ pool.connect((error, client) => {
         image VARCHAR(255)
 
       );
+
+      create table IF NOT EXISTS toughts (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255),
+        content VARCHAR(255)
+      );
+
+
+
     `;
 
     client.query(createTableQuery, (error, result) => {

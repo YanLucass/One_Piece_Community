@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 //routes
 import userRoutes from '../routes/userRoutes';
+import toughtsRoutes from '../routes/toughtsRoutes';
 
 const app = express();
 const port = 5000;
@@ -14,6 +15,7 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 //define routes
 app.use('/users', userRoutes);
+app.use('/toughts', toughtsRoutes);
 
 //static files
 app.use(express.static('public'));
