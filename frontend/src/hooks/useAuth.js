@@ -44,7 +44,7 @@ export default function useAuth() {
             await insertTokenToUser(data);
 
         } catch(err) {
-            console.log(err);
+            console.log('Deu erro',err);
             msgText = err.response.data.message;
             msgType = 'error'
         }
@@ -53,6 +53,27 @@ export default function useAuth() {
     }
 
     //função de login
+    async function login(user) {
+        let msgText = 'Icem as velas!'
+        let msgType = 'success'
+
+        try {
+        
+            const response = await api.post('/users/login', user);
+            console.log(response);
+            const data = response.data;
+            await insertTokenToUser(data);
+
+        } catch(err) {
+            console.log(err);
+            msgText = err.response.data.message;
+            msgType = 'error'
+            console.log('Deu erro', err);
+        }
+
+        setFlashMessage(msgText, msgType);
+
+    }
      
     //autenticar o usuario, salvando o token na localStorage
     async function insertTokenToUser(data) {
@@ -63,7 +84,7 @@ export default function useAuth() {
     }
     
 
-    return { authenticated, registerUser}
+    return { authenticated, registerUser, login}
  }
 
 

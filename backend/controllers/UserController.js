@@ -91,11 +91,11 @@ class UserController {
 
         const user = await User.findUserByEmail(email);
 
-
           //if don't exists this email
-          if(user.length === 0) {
-            res.status(201).json({message: "Esse email não existe no sistema!"});
-            return; 
+          if(!user) {
+            console.log('chegou!');
+            res.status(422).json({message: "Esse usuario não existe!"});
+            return;
         }
         
         //check if passwords matchs
