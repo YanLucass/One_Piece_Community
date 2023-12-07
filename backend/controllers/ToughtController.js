@@ -17,7 +17,7 @@ class ToughtController {
       //get user id.
       const token = getToken(req);
       const user = await getUserByToken(token);
-      console.log(user.id);
+
       
       const tought = {
         title, content,
@@ -29,9 +29,19 @@ class ToughtController {
           res.status(200).json({message: "Habilidade pensante desbloqueada!"});
       }
       catch(err) {
-        console.log(err);
+        res.status(500).json({message: "Algo deu errado, tente novamente mais tarde."});
       }
 
+    }
+
+
+    static async getAll(req, res) {
+        try {
+            const toughts = await Toughts.getAllThoughts()
+            res.status(200).json({toughts});
+        } catch(err) {
+            console.log('Deu erro', err);
+        }
     }
 }
 

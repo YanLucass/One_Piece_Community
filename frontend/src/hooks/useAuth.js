@@ -52,8 +52,7 @@ export default function useAuth() {
         setFlashMessage(msgText, msgType);
     }
 
-
-    //função de login.
+    //função de login
      
     //autenticar o usuario, salvando o token na localStorage
     async function insertTokenToUser(data) {
@@ -62,6 +61,7 @@ export default function useAuth() {
         navigate('/');
         
     }
+    
 
     return { authenticated, registerUser}
  }
