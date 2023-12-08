@@ -16,11 +16,14 @@ import Message from './components/layout/Message';
 //context
 import { UserProvider } from './context/UserContext';
 
+// layouts
+import NavBar from './components/layout/NavBar';
 
 function App() {
   return (
     <BrowserRouter>
     <UserProvider>
+      <NavBar/>
       <Message/>
     <Container>
       <Routes>

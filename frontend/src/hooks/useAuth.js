@@ -82,9 +82,23 @@ export default function useAuth() {
         navigate('/');
         
     }
+
+    
+    //logout function
+    function logout() {
+        let msgText = 'Logout realizado com sucesso. Até mais!'
+        let msgType = 'success'
+        //remover token
+        setAuthenticated(false)
+        localStorage.removeItem('token');
+        //retirar o token da instancia da api
+        api.defaults.headers.Authorization = undefined;
+        setFlashMessage(msgText, msgType);
+        navigate('/');
+    }
     
 
-    return { authenticated, registerUser, login}
+    return { authenticated, registerUser, login, logout}
  }
 
 
