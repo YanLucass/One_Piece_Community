@@ -172,5 +172,26 @@ class UserController {
         }
 
    }
+
+    static async getOneUser(req, res) {
+        //get user
+        const token = getToken(req);
+        const currentUser = await getUserByToken(token);
+        console.log(currentUser.id);
+
+
+        //get user data
+        try {
+            const user = await User.findUserById(currentUser.id);
+            res.status(200).json({message: user});
+
+        }catch(err) {
+            console.log('Deu erro:', err);
+        }
+       
+
+    }
 }
+
+
 export default UserController;
