@@ -21,7 +21,7 @@ function Home() {
             {toughts.map((tought, index) => (
                 <div key={index}>
                     <h2>{tought.title}</h2>
-                    <p>{tought.description}</p>
+                    <p>{tought.content}</p>
                     <span className="bold">por: {tought.user_name}</span>
                 </div>
             ) )}

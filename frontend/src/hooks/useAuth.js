@@ -1,6 +1,6 @@
 import api from "../utils/api";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import useFlashMessage from "./useFlashMessage";
 
 export default function useAuth() {
@@ -83,6 +83,18 @@ export default function useAuth() {
         
     }
 
+    //renderizar imagem
+    async function renderImage(token) {
+        const response = await api.get('/users/currentUser', {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+        const data = response.data.message.image;
+        return data;
+        
+       
+    }
     
     //logout function
     function logout() {
@@ -98,7 +110,7 @@ export default function useAuth() {
     }
     
 
-    return { authenticated, registerUser, login, logout}
+    return { authenticated, registerUser, login, logout, renderImage}
  }
 
 

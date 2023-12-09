@@ -177,8 +177,7 @@ class UserController {
         //get user
         const token = getToken(req);
         const currentUser = await getUserByToken(token);
-        console.log(currentUser.id);
-
+        
 
         //get user data
         try {

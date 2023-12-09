@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/register', imageUpload.single("image"), UserController.register);
 router.patch('/edit/:id', checkToken, imageUpload.single("image"), UserController.editUser);
 router.post('/login', UserController.login);
-router.get('/:id', checkToken, UserController.getOneUser);
+router.get('/currentUser', checkToken, UserController.getOneUser);
 
 
 export default router;
