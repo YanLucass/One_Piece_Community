@@ -97,11 +97,13 @@ class UserController {
             return;
         }
         
+        console.log(password);
         //check if passwords matchs
         const checkPassword = await bcrypt.compare(password, user.password);
+   
 
         if(!checkPassword) {
-            res.status(201).json({message: "Senha incorreta!"});
+            res.status(422).json({message: "Senha incorreta!"});
             return;
         }
          
@@ -129,7 +131,7 @@ class UserController {
         }
         
         if(!name) {
-            res.status(422).json({message: "Nomeeee obrigatório!"});
+            res.status(422).json({message: "Nome é obrigatório!"});
             return;
         }
 
@@ -163,8 +165,10 @@ class UserController {
         }
 
         try {
+            const userWithoutPassword = {...user};
+            delete userWithoutPassword.password;
             await User.updateUserById(user)
-            res.status(200).json({message: "Usuario atualizado!", user});
+            res.status(200).json({message: "Usuario atualizado!", userWithoutPassword});
         }
         catch(err) {
             console.log(err);
@@ -180,8 +184,11 @@ class UserController {
 
         //get user data
         try {
+
             const user = await User.findUserById(currentUser.id);
-            res.status(200).json({message: user});
+            const userWithoutPassword = {...user}
+            delete userWithoutPassword.password
+            res.status(200).json({message: userWithoutPassword});
 
         }catch(err) {
             console.log('Deu erro:', err);

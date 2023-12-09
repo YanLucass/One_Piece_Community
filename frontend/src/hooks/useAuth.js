@@ -60,7 +60,7 @@ export default function useAuth() {
         try {
         
             const response = await api.post('/users/login', user);
-            console.log(response);
+            
             const data = response.data;
             await insertTokenToUser(data);
 
@@ -84,17 +84,7 @@ export default function useAuth() {
     }
 
     //renderizar imagem
-    async function renderImage(token) {
-        const response = await api.get('/users/currentUser', {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
-        const data = response.data.message.image;
-        return data;
-        
-       
-    }
+   
     
     //logout function
     function logout() {
@@ -110,7 +100,7 @@ export default function useAuth() {
     }
     
 
-    return { authenticated, registerUser, login, logout, renderImage}
+    return { authenticated, registerUser, login, logout}
  }
 
 
