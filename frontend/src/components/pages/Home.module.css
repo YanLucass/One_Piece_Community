@@ -1,3 +1,5 @@
 body {
     background-image: url('../../assets/img/op.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }

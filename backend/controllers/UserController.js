@@ -36,7 +36,7 @@ class UserController {
         
         //check if email exists
         const userEmail = await User.findUserByEmail(email); //receives the array of result lines
-        console.log(userEmail);
+       
         
         //if result lines greater than zero
         if(userEmail) {
@@ -93,7 +93,6 @@ class UserController {
 
           //if don't exists this email
           if(!user) {
-            console.log('chegou!');
             res.status(422).json({message: "Esse usuario não existe!"});
             return;
         }

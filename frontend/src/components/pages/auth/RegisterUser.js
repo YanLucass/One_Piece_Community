@@ -1,11 +1,12 @@
 
 import Input from "../../form/Input";
 import { useContext, useState } from "react";
-
+import styles from '../../form/Form.module.css'
 // Components
 import RoundedImage from "../../layout/RoundedImage";
 //context
 import { Context } from "../../../context/UserContext";
+import imgCadastro from '../../../assets/img/imgCadastro.png'
 
 function Register() {
     const [user, setUser] = useState({});
@@ -35,15 +36,18 @@ function Register() {
     }
 
     return (
-        <div>
+            <div className={styles.register_container}>
+            <section> 
             <h1>Registro</h1>
+            <section className={styles.img}>
             {(preview) && (
                <RoundedImage 
                     src={URL.createObjectURL(preview)} 
                     alt={user.name}
                />
             )}
-
+            </section>
+          
             <Input 
                 text="Imagem:"
                 type="file"
@@ -83,7 +87,8 @@ function Register() {
                 handleOnChange={onChange}
             />
 
-            <input type="submit" onClick={submit}></input>
+            <input type="submit" onClick={submit} className={styles.inputButton}></input>
+        </section>
         </div>
     )
 }

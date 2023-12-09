@@ -1,4 +1,4 @@
-import styles from './Form.module.css'
+import styles from './Input.module.css'
 
 function Input({type, text, name, placeholder, handleOnChange, value, multiple}) {
     
