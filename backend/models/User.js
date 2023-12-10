@@ -14,14 +14,15 @@ class User {
             let query, values;
         
             if (image) {
-                query = `INSERT INTO users (name, email, password, image) VALUES ($1, $2, $3, $4)`;
+                query = `INSERT INTO users (name, email, password, image) VALUES ($1, $2, $3, $4) RETURNING *`;
                 values = [name, email, password, image];
             } else {
-                query = `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`;
+                query = `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *`;
                 values = [name, email, password];
             }
         
-           await pool.query(query, values);
+           const result = await pool.query(query, values);
+           return result.rows[0];
           
         }
         catch(err) {

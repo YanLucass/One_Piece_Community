@@ -63,8 +63,8 @@ class UserController {
         }
           
         try {
-            await User.save(user);
-            const token = await createUserToken(user, req, res);
+            const newUser = await User.save(user);
+            const token = await createUserToken(newUser, req, res);
           
         } catch (error) {
             console.log(error);
@@ -97,7 +97,7 @@ class UserController {
             return;
         }
         
-        console.log(password);
+       
         //check if passwords matchs
         const checkPassword = await bcrypt.compare(password, user.password);
    
@@ -108,6 +108,7 @@ class UserController {
         }
          
         try {
+    
             const token = await createUserToken(user, req, res);
         
         } catch(err) {
@@ -123,6 +124,7 @@ class UserController {
         let image = ''; // to multer case user don't provider a photo
          
         const token = getToken(req);
+        
         const user = await getUserByToken(token)
 
 
@@ -153,6 +155,7 @@ class UserController {
         user.email = email;
 
         //password matchs?
+        console.log(password, confirmPassword);
         if(password != confirmPassword) {
             res.status(422).json({message: "As senhas devem ser iguais"});
             return;
@@ -171,7 +174,7 @@ class UserController {
             res.status(200).json({message: "Usuario atualizado!", userWithoutPassword});
         }
         catch(err) {
-            console.log(err);
+            return res.status(500).json({message: "erro ao atualizar o usuário, tente mais tadr"});
         }
 
    }
@@ -179,19 +182,11 @@ class UserController {
     static async getOneUser(req, res) {
         //get user
         const token = getToken(req);
-        const currentUser = await getUserByToken(token);
-        
-
-        //get user data
+        const user = await getUserByToken(token);
         try {
-
-            const user = await User.findUserById(currentUser.id);
-            const userWithoutPassword = {...user}
-            delete userWithoutPassword.password
-            res.status(200).json({message: userWithoutPassword});
-
-        }catch(err) {
-            console.log('Deu erro:', err);
+            res.status(200).json({message: user});
+        } catch(err) {
+            res.status(500).json({message: 'ops algo deu errado, tente mais tarde'});
         }
        
 

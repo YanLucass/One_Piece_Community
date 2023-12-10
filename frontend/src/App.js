@@ -10,6 +10,8 @@ import Register from './components/pages/auth/RegisterUser'
 import Login from './components/pages/auth/Login';
 import Container from './components/layout/Container';
 import Profile from './components/pages/User/Profile';
+import Dashboard from './components/pages/User/Dashboard';
+import CreateTought from './components/pages/Toughts/CreateTought';
 // hooks
 import Message from './components/layout/Message';
 
@@ -31,6 +33,9 @@ function App() {
           <Route path = "/users/register" element={< Register/>} />
           <Route path = "/users/login" element={<Login />} />
           <Route path = "/users/edit" element={<Profile/>} />
+          <Route path = "/users/dashboard" element={<Dashboard/>} />
+          <Route path = "/toughts/create" element={<CreateTought/>} />
+          
       </Routes>
 
       </Container>

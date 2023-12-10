@@ -6,8 +6,9 @@ import getToken from '../helpers/get-token';
 
 class ToughtController {
     
-    static async createTask(req, res) {
+    static async createTought(req, res) {
       const { title, content } = req.body;
+      console.log(title, content);
 
       if(!content) {
          res.status(422).json({message: "Hey! digite um conteudo para sua publicação"});
@@ -34,7 +35,7 @@ class ToughtController {
 
     }
 
-
+    // get all toughts
     static async getAll(req, res) {
         try {
             const toughts = await Toughts.getAllThoughts()
@@ -42,6 +43,20 @@ class ToughtController {
         } catch(err) {
             console.log('Deu erro', err);
         }
+    }
+
+    //get user toughts
+    static async showUserToughts(req, res) {
+      //get user
+      const token = getToken(req);
+      console.log(token);
+      const user = await getUserByToken(token);
+      console.log(user);
+
+      //search toughts
+      const userToughts = await Toughts.getUserToughts(user.id);
+      res.status(200).json({message: userToughts});
+
     }
 }
 

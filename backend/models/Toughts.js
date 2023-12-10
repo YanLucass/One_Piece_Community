@@ -32,7 +32,25 @@ class Toughts {
             return result.rows;
         } catch(err) {
             console.log('Erro ao pegar todos pensamentos', err);
-            throw err; // É importante lançar o erro para que seja tratado posteriormente
+            throw err; 
+        }
+    }
+
+    static async getUserToughts(userId) {
+        try {
+            const query = ` 
+            SELECT t.*, u.name AS user_name
+            FROM toughts t
+            INNER JOIN users u ON t.user_id = u.id
+            WHERE t.user_id = $1`;
+            
+            const value = [userId];
+            const result = await pool.query(query, value);
+            return result.rows;
+
+        }catch(err) {
+            console.log('Erro ao pegar os pensamentos do usuário', err);
+            throw err
         }
     }
 

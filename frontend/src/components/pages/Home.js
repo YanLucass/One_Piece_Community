@@ -16,6 +16,7 @@ function Home() {
 
     return (
         <div>
+            
             <h1> Homee</h1>
        
             {toughts.map((tought, index) => (
