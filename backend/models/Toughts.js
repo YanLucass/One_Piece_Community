@@ -24,7 +24,7 @@ class Toughts {
     static async getAllThoughts() {
         try {
             const query = `
-              SELECT toughts.*, users.name AS user_name 
+              SELECT toughts.*, users.name AS user_name, users.image AS user_image
               FROM toughts 
               INNER JOIN users ON toughts.user_id = users.id
             `;

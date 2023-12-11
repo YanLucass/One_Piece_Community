@@ -1,0 +1,73 @@
+/* Dashboard.module.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .userThought {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--preto);
+    color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userThought h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .userThought p {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  
+  .userThought .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .userThought .actions a,
+  .userThought .actions button {
+    padding: 8px 12px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .userThought .actions a {
+    background-color: #007bff;
+  }
+  
+  .userThought .actions button {
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .create {
+    text-decoration: none;
+    padding: 7px;
+    border-radius: 5px;
+    background-color: rgb(253, 253, 11);
+    color: #dc3545;
+    border: 1px solid blue;
+
+  }
+
+  .create:hover {
+    background-color: rgb(156, 156, 19);
+  }

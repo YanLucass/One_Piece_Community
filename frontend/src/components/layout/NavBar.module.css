@@ -1,0 +1,77 @@
+:root {
+    --vermelho:#b30a0a;
+    --azul: #166bdb;
+    --ciano: #00ffff;
+    --preto: #222;
+}
+
+
+#logo img {
+    height: 100px;
+}
+
+#navbar {
+    padding: 1.2em 1.4em;
+    margin-bottom: 1em;
+    /* flex jogar um do lado o outro */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    border-bottom: 1px solid #f6982d;
+}
+
+#navbar ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+#navbar li {
+    margin-left: 1em;
+    text-decoration: none;
+    transition: .5s;
+    font-weight: bold;
+    color: rgb(12, 152, 233);
+    cursor: pointer;
+}
+
+#navbar ul li a {
+    text-decoration: none;
+    transition: .5s;
+    font-weight: bold;
+    color: rgb(12, 152, 233);
+}
+
+#navbar ul li:hover {
+    color: var(--azul);
+}
+
+
+#navbar ul li a:hover {
+    color: var(--azul);
+}
+
+
+/* User profile */
+#navbar ul li.user-profile {
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+}
+
+#navbar ul li.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#navbar ul li.user-profile p {
+    margin: 0;
+    font-weight: bold;
+    color: white;
+}
+
+.userName {
+    color: rgb(218, 13, 47);
+}
