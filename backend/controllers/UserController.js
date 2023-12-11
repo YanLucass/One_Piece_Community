@@ -183,6 +183,7 @@ class UserController {
         //get user
         const token = getToken(req);
         const user = await getUserByToken(token);
+        delete user.password
         try {
             res.status(200).json({message: user});
         } catch(err) {

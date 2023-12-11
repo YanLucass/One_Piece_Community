@@ -30,7 +30,6 @@ function Profile() {
 
     }, [token]);
 
- 
 
     function onChange(e) {
         setUser({...user, [e.target.name]: e.target.value});
