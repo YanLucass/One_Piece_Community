@@ -9,9 +9,11 @@ import ToughtController from '../controllers/ToughtController'
 import checkToken from '../helpers/verify-token';
 
 router.post('/create', checkToken, ToughtController.createTought);
-//get all toughts
+//get all thoughts
 router.get('/all', ToughtController.getAll);
-//get user toughts
+//get user thoughts
 router.get('/userToughts', checkToken, ToughtController.showUserToughts);
+//edit thougt
+router.patch('/edit/:id', checkToken, ToughtController.editThought);
 
 export default router;

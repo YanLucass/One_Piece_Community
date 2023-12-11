@@ -35,7 +35,7 @@ function Dashboard() {
               <h3>{thought.title}</h3>
               <p>{thought.content}</p>
               <div className={styles.actions}>
-                <Link to='/toughts/edit'>Editar</Link>
+                <Link to={`/toughts/edit/${thought.id}`}>Editar</Link>
                 <Link to='/toughts/create'>Criar publicação</Link>
                 <button onClick={deleteThought}>Deletar</button>
               </div>

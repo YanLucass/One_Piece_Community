@@ -3,6 +3,7 @@ import Toughts from "../models/Toughts";
 //utils
 import getUserByToken from '../helpers/getUser-by-token';
 import getToken from '../helpers/get-token';
+import validId from '../helpers/valid-id'
 
 class ToughtController {
     
@@ -57,6 +58,49 @@ class ToughtController {
       const userToughts = await Toughts.getUserToughts(user.id);
       res.status(200).json({message: userToughts});
 
+    }
+
+    //edit
+    static async editThought(req, res) {
+
+        const { id } = req.params;
+        const { title, content } = req.body;
+    
+
+        if(!content) {
+          res.status(422).json({message: 'Hey, forneça um conteudo a sua postagem :)'});
+          return;
+        }
+
+        //get current user id, to compare with tought user_id
+
+        //procurar o pensamento com id forncecido, e que esse pensamento tenha o user_id obtido
+        const token = getToken(req);
+        const user = await getUserByToken(token);
+        const thoughtToEdit = await Toughts.getUserThoughtById(id, user.id);
+
+        if(thoughtToEdit.length === 0) {
+          res.status(403).json({message: 'Você só pode editar suas publicação'});
+          return;
+        }
+
+        const thougth = thoughtToEdit[0];
+        
+        if(title) {
+          thougth.title = title;
+        }
+
+        thougth.content = content;
+        try {
+          const editedThought = await Toughts.editUserThought(thougth);
+          res.status(200).json({message: 'Pensamento atualizado com sucesso', editedThought});
+        }
+
+        catch(err) {
+          console.error('erro ao editar o pensamento', err);
+          res.status(500).json({message: "Algo deu errado, tente novamente mais tarde!"});
+        }
+       
     }
 }
 

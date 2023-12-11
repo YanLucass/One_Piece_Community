@@ -36,6 +36,7 @@ class Toughts {
         }
     }
 
+    //get all thoghts from user
     static async getUserToughts(userId) {
         try {
             const query = ` 
@@ -51,6 +52,37 @@ class Toughts {
         }catch(err) {
             console.log('Erro ao pegar os pensamentos do usuário', err);
             throw err
+        }
+    }
+
+    //get thoghts by onwner 
+    static async getUserThoughtById(id, userId) {
+        try {
+            const query = `SELECT * FROM toughts WHERE id = $1 AND user_id = $2 `
+            const values = [id, userId];
+            const userThought = await pool.query(query, values);
+            return userThought.rows;
+        } 
+        catch(err) {
+            console.log('Erro ao pegar pensamento do usuário' ,err);
+            throw err;
+        }
+      
+    }
+
+    //edit user thought
+    static async editUserThought(thought) {
+        try {
+           
+            const { id, title, content } = thought;
+            const query = `UPDATE toughts SET title = $1, content = $2 WHERE id = $3 RETURNING *`;
+            const values = [title, content, id];
+            const result = await pool.query(query, values);
+            return result.rows
+         
+        } catch (err) {
+            console.log(err);
+            throw Error;
         }
     }
 
