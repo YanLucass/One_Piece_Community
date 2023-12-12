@@ -27,10 +27,10 @@ class ToughtController {
 
       try {
           await Toughts.saveTought(tought);
-          res.status(200).json({message: "Habilidade pensante desbloqueada!"});
+          return res.status(200).json({message: "Habilidade pensante desbloqueada!"});
       }
       catch(err) {
-        res.status(500).json({message: "Algo deu errado, tente novamente mais tarde."});
+         return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde."});
       }
 
     }
@@ -90,14 +90,42 @@ class ToughtController {
         thougth.content = content;
         try {
           const editedThought = await Toughts.editUserThought(thougth);
-          res.status(200).json({message: 'Pensamento atualizado com sucesso', editedThought});
+          return res.status(200).json({message: 'Pensamento atualizado com sucesso', editedThought});
         }
 
         catch(err) {
           console.error('erro ao editar o pensamento', err);
-          res.status(500).json({message: "Algo deu errado, tente novamente mais tarde!"});
+          return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde!"});
         }
        
+    }
+
+    //delete 
+
+    static async deleteTought(req, res) {
+        const { id } = req.params;
+
+       //checks if the user_id of the thought matches the id of the logged in user
+       const token = getToken(req);
+       const user = await getUserByToken(token);
+
+       const toughtDelete = await Toughts.getUserThoughtById(id, user.id);
+
+       //case logged user don't owner of thought
+       if(toughtDelete.length === 0) {
+          res.status(403).json({message: "Você só pode deletar os seus pensamentos!"});
+          return;
+       }
+
+       try {
+          const result = await Toughts.deleteTought(id);
+          return res.status(200).json({message: "Pensamento deletado com sucesso!"});
+       }
+       catch {
+          console.log("Erro ao deletar pensamento", err);
+          return res.status(500).json({message: "Algo deu errado tente novamente mais tarde!"});
+       }
+
     }
 }
 

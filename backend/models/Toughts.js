@@ -87,6 +87,20 @@ class Toughts {
         }
     }
 
+    //delete thought
+    static async deleteTought(toughtId) {
+        try {
+            const query = `DELETE FROM toughts WHERE id = $1`;
+            const value = [toughtId];
+            const result = await pool.query(query, value);
+            return result.rowCount;
+
+        } catch (err) {
+             console.error('Erro ao deletar o pensamento:', error);
+            throw err;
+        }
+    }
+
 
 }
 
