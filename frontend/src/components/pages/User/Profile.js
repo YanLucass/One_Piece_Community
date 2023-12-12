@@ -51,7 +51,6 @@ function Profile() {
             formData.append(key, user[key])
         })
 
-
         try {
             const response = await api.patch(`/users/edit/${user.id}`, formData, {
                 headers: {
@@ -69,6 +68,7 @@ function Profile() {
             setFlashMessage(msgText, msgType);
         }
        
+        
     }
 
     return (

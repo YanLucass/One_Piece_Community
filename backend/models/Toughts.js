@@ -27,6 +27,7 @@ class Toughts {
               SELECT toughts.*, users.name AS user_name, users.image AS user_image
               FROM toughts 
               INNER JOIN users ON toughts.user_id = users.id
+              ORDER BY toughts.created_at DESC
             `;
             const result = await pool.query(query);
             return result.rows;

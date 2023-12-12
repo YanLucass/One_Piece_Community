@@ -2,8 +2,10 @@ import api from "../../../utils/api";
 import Input from "../../form/Input";
 import { useState, useEffect } from "react";
 import useFlashMessage from '../../../hooks/useFlashMessage'
+import { useNavigate} from "react-router-dom";
 
 function CreateTought() {
+    const navigate = useNavigate();
     const [tought, setTought] = useState({});
     const [token] = useState(localStorage.getItem('token') || '');
     const {setFlashMessage} = useFlashMessage();
@@ -24,13 +26,14 @@ function CreateTought() {
                 }
             })
             const data = response.data;
-            console.log(data);
+            navigate('/')
         }
         catch(err) {
             msgType = 'error'
             msgText = err.response.data.message;
         }
         setFlashMessage(msgText, msgType);
+     
     }
 
 

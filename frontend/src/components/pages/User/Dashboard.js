@@ -29,7 +29,8 @@ function Dashboard() {
      <Link to='/toughts/create' className={styles.create}>Criar publicação</Link>
       {userThoughts.length > 0 ? (
         <div className={styles.container}>
-          <h1>Sua dashboard {userThoughts[0].user_name}</h1>
+          <h1>Sua dashboard {userThoughts.length > 0 ? userThoughts[0].user_name : ''}</h1>
+
           {userThoughts.map((thought, index) => (
             <div className={styles.userThought} key={index}>
               <h3>{thought.title}</h3>

@@ -26,10 +26,12 @@ pool.connect((error, client) => {
 
       );
 
-      create table IF NOT EXISTS toughts (
+      CREATE TABLE IF NOT EXISTS toughts (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255),
-        content VARCHAR(255)
+        content VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        user_id INT REFERENCES users(id) 
       );
 
 

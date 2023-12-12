@@ -9,7 +9,6 @@ class ToughtController {
     
     static async createTought(req, res) {
       const { title, content } = req.body;
-      console.log(title, content);
 
       if(!content) {
          res.status(422).json({message: "Hey! digite um conteudo para sua publicação"});
@@ -50,9 +49,7 @@ class ToughtController {
     static async showUserToughts(req, res) {
       //get user
       const token = getToken(req);
-      console.log(token);
       const user = await getUserByToken(token);
-      console.log(user);
 
       //search toughts
       const userToughts = await Toughts.getUserToughts(user.id);
@@ -81,7 +78,7 @@ class ToughtController {
 
         if(thoughtToEdit.length === 0) {
           res.status(403).json({message: 'Você só pode editar suas publicação'});
-          return;
+          return; 
         }
 
         const thougth = thoughtToEdit[0];

@@ -15,5 +15,8 @@ router.get('/all', ToughtController.getAll);
 router.get('/userToughts', checkToken, ToughtController.showUserToughts);
 //edit thougt
 router.patch('/edit/:id', checkToken, ToughtController.editThought);
+//delete thought
+router.delete('/delete', checkToken, ToughtController.deleteTought);
+
 
 export default router;
