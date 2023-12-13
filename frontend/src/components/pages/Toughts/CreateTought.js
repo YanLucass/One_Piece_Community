@@ -3,6 +3,7 @@ import Input from "../../form/Input";
 import { useState, useEffect } from "react";
 import useFlashMessage from '../../../hooks/useFlashMessage'
 import { useNavigate} from "react-router-dom";
+import styles from '../../form/Form.module.css'
 
 function CreateTought() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function CreateTought() {
 
  
     return (
-        <div>
+        <div className={styles.register_container}>
         <h1>Criar publicação</h1>
         <Input 
             type='text'
@@ -60,7 +61,7 @@ function CreateTought() {
             
         />
 
-        <input type="submit" onClick={submit} value='Enviar' />
+        <input type="submit" className={styles.inputButton} onClick={submit} value='Criar' />
 
         </div>
     )

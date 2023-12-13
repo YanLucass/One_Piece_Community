@@ -4,6 +4,7 @@ import Input from '../../form/Input';
 import { useParams } from 'react-router-dom';
 import useFlashMessage from '../../../hooks/useFlashMessage';
 import { useNavigate } from 'react-router-dom';
+import styles from '../../form/Form.module.css'
 
 function EditThought() {
     const {id} = useParams();
@@ -68,7 +69,7 @@ function EditThought() {
     }
 
     return( 
-        <div>
+        <div className={styles.register_container}>
             <h1>Editar Pensamento</h1>
             <Input
                 type='text'
@@ -90,7 +91,7 @@ function EditThought() {
                 handleOnChange={onChange}
             />
 
-            <input type="submit" value="Editar" onClick={submit}/>
+            <input type="submit" value="Editar" className={styles.inputButton} onClick={submit}/>
 
         </div>
     )

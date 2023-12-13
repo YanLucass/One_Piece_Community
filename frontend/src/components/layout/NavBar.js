@@ -11,7 +11,7 @@ function NavBar() {
   const [user, setUser] = useState({});
   const token = localStorage.getItem("token") || "";
 
-  //corrigir
+  //get current user  
   useEffect(() => {
     const fetchUser = async () => {
       if (authenticated) {

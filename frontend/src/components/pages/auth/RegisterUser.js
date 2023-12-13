@@ -31,7 +31,6 @@ function Register() {
     function submit(e) {
         e.preventDefault();
         //chamar register.
-        console.log(user);
         registerUser(user);
     }
 
@@ -39,6 +38,7 @@ function Register() {
             <div className={styles.register_container}>
             <section> 
             <h1>Registro</h1>
+            {/* show image preview */}
             <section className={styles.img}>
             {(preview) && (
                <RoundedImage 

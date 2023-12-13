@@ -3,6 +3,7 @@ import Input from "../../form/Input"
 
 import { Context } from "../../../context/UserContext"
 import { Link } from "react-router-dom";
+import styles from '../../form/Form.module.css'
 
 function Login() {
 
@@ -19,7 +20,7 @@ function Login() {
    }
 
     return (
-        <div> 
+        <div className={styles.register_container}> 
             <h1>Login</h1>
             <Input 
                 type="text"
@@ -37,7 +38,7 @@ function Login() {
                 handleOnChange={onChange}
             />
 
-            <input type="submit" onClick={submit}></input>
+            <input type="submit" onClick={submit}  className={styles.inputButton}></input>
             <p>Já tem uma conta? <Link to='/users/register'>Clique aqui</Link> </p>
             
         </div>

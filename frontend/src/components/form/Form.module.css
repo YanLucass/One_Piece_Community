@@ -12,6 +12,10 @@
     color: var(--azul);
     text-align: center;
   }
+
+  .register_container p {
+    margin-top: 20px;
+  }
   
   .img {
     display: flex;
@@ -20,8 +24,7 @@
  
   }
 
-  
-  
+
   .inputButton {
     margin: 0 auto;
     display: block;
