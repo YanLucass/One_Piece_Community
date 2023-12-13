@@ -55,6 +55,9 @@ function NavBar() {
         <li>
           <Link to="/">Pensamentos</Link>
         </li>
+        <li><Link to = '/archs'>Arcos</Link></li>
+        
+        {/* show only users authenticated */}
         {authenticated ? (
           <>
 
@@ -64,6 +67,8 @@ function NavBar() {
             <li>
               <Link to="/users/edit">Meu perfil</Link>
             </li>
+
+            {/* show user image */}
             {user.image && (
               <>
                 <RoundedImage
@@ -74,11 +79,13 @@ function NavBar() {
                 <span className={styles.userName}>{user.name}</span>
               </>
             )}
-            <li className={`${styles.userProfile} user-profile`}>
             
-            </li>
+            <li className={`${styles.userProfile} user-profile`}></li>
+          
             <li onClick={logout}>Sair</li>
           </>
+
+        // user not authenticated
         ) : (
           <>
             <li>

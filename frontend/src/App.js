@@ -13,6 +13,9 @@ import Profile from './components/pages/User/Profile';
 import Dashboard from './components/pages/User/Dashboard';
 import CreateTought from './components/pages/Toughts/CreateTought';
 import EditThought from './components/pages/Toughts/EditThought';
+import Archs from './components/pages/Archs/Archs';
+import Wano from './components/pages/Archs/Wano';
+
 // hooks
 import Message from './components/layout/Message';
 
@@ -37,6 +40,8 @@ function App() {
           <Route path = "/users/dashboard" element={<Dashboard/>} />
           <Route path = "/toughts/create" element={<CreateTought/>} />
           <Route path = "/toughts/edit/:id" element={<EditThought/>} />
+          <Route path = '/archs' element={<Archs />} />
+          <Route path = '/archs/wano' element={<Wano/>} />
           
       </Routes>
 
