@@ -3,11 +3,16 @@ import { useState, useEffect } from 'react';
 import Input from '../../form/Input';
 import { useParams } from 'react-router-dom';
 import useFlashMessage from '../../../hooks/useFlashMessage';
+import { useNavigate } from 'react-router-dom';
 
 function EditThought() {
     const {id} = useParams();
     const [token] = useState(localStorage.getItem('token') || '');
+    const navigate = useNavigate();
+    //to old tought case have
+    const [thought, setThought] = useState({});
     const [thoughtEdit, setThoughtEdit] = useState({});
+
     const { setFlashMessage} = useFlashMessage();
 
 
@@ -15,8 +20,26 @@ function EditThought() {
         setThoughtEdit({...thoughtEdit, [e.target.name]: e.target.value});
     }
 
+    useEffect(() => {
+        api.get(`/toughts/edit/${id}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+        .then(response => {
+            setThoughtEdit(response.data.message);
+        })
 
-   async function editUser() {
+        .catch(err => {
+            console.log('Deu erro:', err);  
+        })
+
+    },[token, id]);
+
+    console.log(thought);
+
+
+   async function editThought() {
 
         let msgText = 'pensamento atualizado com sucesso';
         let msgType = 'success'
@@ -25,7 +48,7 @@ function EditThought() {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(token)}`
                 }
-            })  
+            })
 
         } catch(err) {
             msgText = err.response.data.message;
@@ -33,13 +56,14 @@ function EditThought() {
         }
 
         setFlashMessage(msgText, msgType);
+        navigate('/users/dashboard')
                
    }
     
 
     async function submit(e) {
         e.preventDefault();
-        editUser();
+        editThought()
        
     }
 
@@ -52,6 +76,7 @@ function EditThought() {
                 name='title'
                 id='title'
                 placeholder='Digite um titulo para seu pensamento(opcional)'
+                value={thoughtEdit.title || ''}
                 handleOnChange={onChange}
             />
 
@@ -61,6 +86,7 @@ function EditThought() {
                 name='content'
                 id='content'
                 placeholder='Adicione um conteúdo a sua publicação'
+                value={thoughtEdit.content || ''}
                 handleOnChange={onChange}
             />
 

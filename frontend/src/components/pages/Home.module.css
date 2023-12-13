@@ -10,7 +10,21 @@ body {
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    position: relative;
   }
+
+  .searchInput {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    left: 0%;
+    top: 10px;
+    background-color: #fff;
+  }
+  
   
   h1 {
     font-size: 2rem;
@@ -41,3 +55,5 @@ body {
   .tought .bold {
     font-weight: bold;
   }
+
+ 

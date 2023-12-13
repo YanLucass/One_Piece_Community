@@ -56,6 +56,23 @@ class Toughts {
         }
     }
 
+    //gettought by id
+    static async getById(toughtId) {
+        try {
+            const query = `SELECT * FROM toughts WHERE id = $1`
+            const result = await pool.query(query, [toughtId]);
+            if(result.rows.length > 0) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
+        }
+        catch(err) {
+            console.error('Erro ao buscar o pensamento por ID:', err);
+            throw err;
+        }
+    }
+
     //get thoghts by onwner 
     static async getUserThoughtById(id, userId) {
         try {
@@ -100,6 +117,9 @@ class Toughts {
             throw err;
         }
     }
+
+
+    
 
 
 }

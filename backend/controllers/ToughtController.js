@@ -127,6 +127,28 @@ class ToughtController {
        }
 
     }
+
+    static async getOneTought(req, res) {
+       const id = req.params.id;
+       const token = getToken(req);
+       const user = await getUserByToken(token);
+
+       //check if the thought of this id has a user id equal to the logged in user
+       const toughtBelongsToUser = await Toughts.getUserThoughtById(id, user.id);
+
+       if(toughtBelongsToUser.length === 0) {
+        res.status(403).json({message: "Você só pode editar os seus pensamentos!"});
+        return;
+       }
+
+       try {
+          const tought = await Toughts.getById(id);
+          return res.status(200).json({message: tought});
+       } catch (err) {
+         console.log("Erro ao pegar o  pensamento", err);
+         return res.status(500).json({message: "Algo deu errado tente novamente mais tarde!"});
+       }
+    }
 }
 
 
