@@ -75,3 +75,41 @@
 .userName {
     color: rgb(218, 13, 47);
 }
+
+
+/* Estilos para telas menores */
+@media screen and (max-width: 768px) {
+  .menuIcon {
+    display: block;
+  }
+
+  .menuLinks {
+    flex-direction: column;
+    position: absolute;
+    top: 80px; /* Ajuste a distância da barra superior conforme necessário */
+    left: -100%;
+    width: 100%;
+    transition: all 0.5s ease;
+    background-color: #222;
+    padding: 20px;
+  }
+
+  .menuLinks.active {
+    left: 0;
+  }
+
+  .menuLinks li {
+    margin: 1em 0;
+  }
+
+  /* Estilizando os links do menu */
+  .menuLinks a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .menuLinks a:hover {
+    color: var(--azul);
+  }
+}

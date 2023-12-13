@@ -16,11 +16,14 @@ function NavBar() {
     const fetchUser = async () => {
       if (authenticated) {
         try {
+          //api to consume current user route
           const response = await api.get("/users/currentUser", {
             headers: {
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
           });
+
+          //filling in the user to display your datas(ex: image etc)
           const data = response.data;
           setUser(data.message);
         } catch (err) {
