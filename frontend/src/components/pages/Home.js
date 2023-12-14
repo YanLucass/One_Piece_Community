@@ -2,6 +2,7 @@
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import styles from './Home.module.css';
+import { useNavigate } from "react-router-dom";
 
 //components
 import RoundedImage from '../layout/RoundedImage'
@@ -17,6 +18,7 @@ dayjs.extend(localizedFormat)
 function Home() {
   const [toughts, setToughts] = useState([]);
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
   // search toughts input
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,7 +55,7 @@ function Home() {
       .then((response) => {
         setToughts(response.data.toughts);
       })
-  }, []);
+  }, [toughts]);
 
 
   // delete tought by id function
@@ -67,7 +69,7 @@ function Home() {
          }
       })
       .then(() => {
-      
+        navigate('/');
       })
       .catch((err) => {
          msgText = err.response.data.message;
@@ -126,7 +128,7 @@ function Home() {
            <span className={styles.bold}>{tought.user_name}</span> 
                {/* formart and display timestamp in Brazilian formart */}
 
-          <span className={styles.bold}>
+          <span className={styles.date}>
             {dayjs(tought.created_at).format('DD/MM/YYYY/ HH:mm')}
           </span> 
               

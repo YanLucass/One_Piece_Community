@@ -34,6 +34,14 @@ pool.connect((error, client) => {
         user_id INT REFERENCES users(id) 
       );
 
+      CREATE TABLE IF NOT EXISTS wanoToughts (
+          id SERIAL PRIMARY KEY,
+          title varchar(255),
+          content text,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          user_id smallint REFERENCES users(id)
+      );
+
 
 
     `;
