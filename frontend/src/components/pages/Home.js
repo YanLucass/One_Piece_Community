@@ -3,10 +3,13 @@ import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import styles from './Home.module.css';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //components
 import RoundedImage from '../layout/RoundedImage'
-import { Link } from "react-router-dom";
+import Input from '../form/Input';
+import Comment from "./Toughts/Commnet";
+
 // format date
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat'  
@@ -18,13 +21,20 @@ dayjs.extend(localizedFormat)
 function Home() {
   const [toughts, setToughts] = useState([]);
   const [user, setUser] = useState({});
+
   const navigate = useNavigate();
 
   // search toughts input
   const [searchTerm, setSearchTerm] = useState('');
 
-  let [token] = useState(localStorage.getItem('token') || '');
+  //tought id from comment component
+  const [selectedToughtId, setSelectedToughtId] = useState(null);
 
+  //tyo display comments from toughts publications
+  const [allComments, setAllComments] = useState([]);
+
+
+  let [token] = useState(localStorage.getItem('token') || '');
 
  //get the current user to display "edit link/delete in their thoughts"
   useEffect(() => {
@@ -55,7 +65,7 @@ function Home() {
       .then((response) => {
         setToughts(response.data.toughts);
       })
-  }, [toughts]);
+  }, []);
 
 
   // delete tought by id function
@@ -84,6 +94,15 @@ function Home() {
       setSearchTerm(e.target.value);
   }
 
+  //quando clicar em "comentar" em uma publicação vamos pegar o id dela
+  const handleThoughtClick = (toughtId) => {
+      setSelectedToughtId(toughtId);
+  }
+
+  
+  //use effect to show all comments form toughts
+
+
   //filter based on the returning term, creating a new array for terms that meet the condition
   const filteredToughts = toughts.filter(tought => {
      return (
@@ -96,12 +115,9 @@ function Home() {
       tought.user_name.toLowerCase().includes(searchTerm.toLowerCase())
      )
   });
-   
 
   return (
 
-  
-  
     <div className={styles.container}>
 
     <div> 
@@ -134,12 +150,19 @@ function Home() {
               
           <h2>{tought.title}</h2>
           <p>{tought.content}</p>
+            {/* quando clicar quero que apaça ese compoenente */}
+            <button onClick={() => handleThoughtClick(tought.id)}>Adicionar comentário</button>
+            {selectedToughtId === tought.id && <Comment id={tought.id} />}  
+              
+          
 
           {/* display edit link  for thought owner users */}
           {tought.user_id === user.id && (
             <>
              <p> <Link to={`/toughts/edit/${tought.id}`}>Editar</Link></p>
-            <button onClick={() => deleteThought(tought.id)}>Deletar</button>
+                <button onClick={() => deleteThought(tought.id)}>Deletar</button>
+  
+            
             </>
            
           )}

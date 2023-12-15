@@ -42,7 +42,12 @@ pool.connect((error, client) => {
           user_id smallint REFERENCES users(id)
       );
 
+      CREATE TABLE IF NOT EXISTS comments (
+        content text NOT NULL, 
+        tought_id smallint REFERENCES toughts(id),
+        user_id smallint REFERENCES users(id)
 
+      );
 
     `;
 

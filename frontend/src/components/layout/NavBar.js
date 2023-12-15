@@ -37,7 +37,7 @@ function NavBar() {
     };
 
     fetchUser();
-  }, [authenticated, token, user]);
+  }, [authenticated, token]);
 
   useEffect(() => {
     if (!authenticated) {

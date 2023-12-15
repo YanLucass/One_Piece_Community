@@ -4,6 +4,7 @@ import cors from 'cors'
 import userRoutes from '../routes/userRoutes';
 import toughtsRoutes from '../routes/toughtsRoutes';
 import archsRoutes from '../routes/archsRoutes'
+import commentRoutes from '../routes/commentRoutes';
 
 const app = express();
 const port = 5000;
@@ -18,6 +19,7 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use('/users', userRoutes);
 app.use('/toughts', toughtsRoutes);
 app.use('/archs', archsRoutes);
+app.use('/comment', commentRoutes);
 
 //static files
 app.use(express.static('public'));
