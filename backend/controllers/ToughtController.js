@@ -121,7 +121,7 @@ class ToughtController {
           const result = await Toughts.deleteTought(id);
           return res.status(200).json({message: "Pensamento deletado com sucesso!"});
        }
-       catch {
+       catch(err) {
           console.log("Erro ao deletar pensamento", err);
           return res.status(500).json({message: "Algo deu errado tente novamente mais tarde!"});
        }

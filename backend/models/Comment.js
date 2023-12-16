@@ -20,6 +20,21 @@ class Comment {
             throw err;
         }
     }
+
+    //get all comments
+    static async getAllComments(toughtId) {
+
+        try {
+            const query = `SELECT * FROM comments WHERE tought_id = $1`
+            const value = [toughtId];
+            const result = await pool.query(query, value);
+            return result.rows;
+        }
+        catch(err) {
+            console.error('Erro ao buscar comentário', err);
+            throw err; 
+        }
+    }
 }
 
 export default Comment;

@@ -27,9 +27,7 @@ class CommentController {
             content,
             toughtId: tought[0].id,
             userId: tought[0].user_id
-        }
-
-        console.log(newTought);
+        }   
 
         try {
             const showTought = await Comment.saveComment(newTought);
@@ -42,8 +40,22 @@ class CommentController {
 
 
     //getAllComments
-    static async getAllComments(req, res) {
-        
+    static async getAll(req, res) {
+        const toughtId = req.params.id;
+        try {
+            const comments = await Comment.getAllComments(toughtId);
+
+            //case do'nt comments
+            if(comments.length === 0) {
+                res.status(404).json({message: "Esse pensamento não existe ou foi excluido ou não tem comentários!"});
+                return;
+            }
+
+            return res.status(200).json({message: "Comments:", comments});
+        }
+        catch(err) {
+            return res.status(500).json({message: "Algo deu errado tente novamente mais tarde!"});
+        }
     }
 
 }

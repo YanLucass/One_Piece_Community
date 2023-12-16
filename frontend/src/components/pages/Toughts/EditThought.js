@@ -10,8 +10,8 @@ function EditThought() {
     const {id} = useParams();
     const [token] = useState(localStorage.getItem('token') || '');
     const navigate = useNavigate();
-    //to old tought case have
-    const [thought, setThought] = useState({});
+  
+    
     const [thoughtEdit, setThoughtEdit] = useState({});
 
     const { setFlashMessage} = useFlashMessage();
@@ -21,23 +21,6 @@ function EditThought() {
         setThoughtEdit({...thoughtEdit, [e.target.name]: e.target.value});
     }
 
-    useEffect(() => {
-        api.get(`/toughts/edit/${id}`, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
-        .then(response => {
-            setThoughtEdit(response.data.message);
-        })
-
-        .catch(err => {
-            console.log('Deu erro:', err);  
-        })
-
-    },[token, id]);
-
-    console.log(thought);
 
 
    async function editThought() {

@@ -1,4 +1,3 @@
-// Home.js
 import api from "../../utils/api";
 import { useState, useEffect } from "react";
 import styles from './Home.module.css';
@@ -68,6 +67,20 @@ function Home() {
   }, []);
 
 
+    //get all comments
+    async function getAllComments(toughtId) {
+      
+      try {
+        const response = await api.get(`/comment/getAll/${toughtId}`);
+        const data = response.data.comments;
+        setAllComments(data);
+       
+       }
+       catch(err) {
+        console.error('Erro ao buscar os comentários', err);
+      }
+    }
+
   // delete tought by id function
   async function deleteThought(id) {
 
@@ -79,6 +92,9 @@ function Home() {
          }
       })
       .then(() => {
+         
+        const updateToughts = toughts.filter(tought => tought.id !== id);
+        setToughts(updateToughts);
         navigate('/');
       })
       .catch((err) => {
@@ -99,23 +115,27 @@ function Home() {
       setSelectedToughtId(toughtId);
   }
 
+
+  
   
   //use effect to show all comments form toughts
 
 
   //filter based on the returning term, creating a new array for terms that meet the condition
-  const filteredToughts = toughts.filter(tought => {
-     return (
-      tought.trim === '' || 
-      //by title
-      tought.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      //by content
-      tought.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      //by author
-      tought.user_name.toLowerCase().includes(searchTerm.toLowerCase())
-     )
-  });
+ const filteredToughts = toughts.filter(tought => {
+  return (
+    tought.trim === '' || 
+    //by title
+    (tought.title?.toLowerCase().includes(searchTerm.toLowerCase()) || '') ||
+    //by content
+    (tought.content?.toLowerCase().includes(searchTerm.toLowerCase()) || '') ||
+    //by author
+    (tought.user_name?.toLowerCase().includes(searchTerm.toLowerCase()) || '')
+  )
+});
 
+
+  console.log(filteredToughts);
   return (
 
     <div className={styles.container}>
@@ -150,11 +170,30 @@ function Home() {
               
           <h2>{tought.title}</h2>
           <p>{tought.content}</p>
+
             {/* quando clicar quero que apaça ese compoenente */}
             <button onClick={() => handleThoughtClick(tought.id)}>Adicionar comentário</button>
             {selectedToughtId === tought.id && <Comment id={tought.id} />}  
-              
-          
+
+                   {/* show comments */}
+                   {allComments.length > 0 ? 
+                        allComments.filter(comment => comment.tought_id === tought.id)
+                        .map((comment, index) => (
+                            <div key={index}> 
+                              {/* show details from comment */}
+                              
+                              <p>{comment.content}</p>
+                              
+                            </div>
+                        
+                        ))  : ''}
+            
+
+                  
+                
+            <button onClick={() => getAllComments(tought.id)}>Ver comentários</button>
+
+     
 
           {/* display edit link  for thought owner users */}
           {tought.user_id === user.id && (

@@ -109,7 +109,7 @@ class Toughts {
             return result.rowCount;
 
         } catch (err) {
-             console.error('Erro ao deletar o pensamento:', error);
+             console.error('Erro ao deletar o pensamento:', err);
             throw err;
         }
     }
