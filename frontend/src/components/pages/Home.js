@@ -182,7 +182,6 @@ function Home() {
                                 width="px45"
                                 src={`${process.env.REACT_APP_API}/images/users/${comment.user_image}`}
                               />                 
-                                <p>{comment.user_image}</p>
                                 <p>{comment.content}</p>
                               
                             </div>

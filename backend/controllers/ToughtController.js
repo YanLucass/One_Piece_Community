@@ -4,6 +4,7 @@ import Toughts from "../models/Toughts";
 import getUserByToken from '../helpers/getUser-by-token';
 import getToken from '../helpers/get-token';
 import validId from '../helpers/valid-id'
+import Like from "../models/Like";
 
 class ToughtController {
     
@@ -100,8 +101,68 @@ class ToughtController {
        
     }
 
-    //delete 
+    //add like to tought
+    static async addLikeTought(req, res) {
+        //pegar o publicação atual
+        const { id } = req.params;
+        const tought = await Toughts.getById(id);
 
+        if(!tought) {
+          res.status(404).json({message: "Você não pode dar like numa publicação que não existe"})
+          return;
+        }
+        
+        //inserir novo like no bd
+        const like = {
+          toughtId: tought.id
+        }
+  
+        try {
+          await Like.addLike(like);
+          return res.status(201).json({message: "Like adicionado com sucesso"});
+        } 
+        catch(err) {
+         return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
+        }
+    }
+
+
+    //getQtdLike function
+    static async getQtdLikesTought(req, res) {
+        const {id} = req.params;
+        try {
+          const qtdLikes = await Like.getQtdLike(id);
+          return res.status(200).json(qtdLikes);
+
+        } catch (err) {
+          return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
+        }
+    }
+
+    //remove like function
+    static async removeLikeTought(req, res) {
+        const {id} = req.params;
+    
+        //pegar publicação pelo id
+        const tought = await Toughts.getById(id);
+
+        //caso não exista
+        if(!tought) {
+          res.status(404).json({message: "Você não pode dar like numa publicação que não existe"})
+          return;
+        }
+
+        try {
+          await Like.removeLike(id);
+          return res.status(200).json({message: 'Like removido com sucesso'});    
+        } 
+        catch(err) {
+          return  res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
+        }
+    }
+
+
+    //delete 
     static async deleteTought(req, res) {
         const { id } = req.params;
 
