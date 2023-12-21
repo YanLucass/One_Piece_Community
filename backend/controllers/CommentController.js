@@ -1,5 +1,7 @@
 import Toughts from '../models/Toughts'
 import Comment from '../models/Comment';
+import getToken from '../helpers/get-token';
+import getUserByToken from '../helpers/getUser-by-token'
 
 
 class CommentController {
@@ -22,22 +24,28 @@ class CommentController {
             return;
         }
 
+
+        //pegar usuario atual para inserir no comentáripo
+        const token = getToken(req);
+        const user = await getUserByToken(token);
+        console.log(user);
+    
         //new tought to save
         const newTought = {
             content,
-            toughtId: tought[0].id,
-            userId: tought[0].user_id
+            toughtId: tought.id,
+            userId: user.id
         }   
 
         try {
-            const showTought = await Comment.saveComment(newTought);
-            return res.status(201).json({message: "Novo comentário adicionado:", showTought});
-        } 
-        catch(err) {
-            return res.status(500).json({message: "Algo deu errado tente novamente mais tarde!"});
+            const createdTought = await Comment.saveComment(newTought);
+            return res.status(200).json({message: "Novo comentário adicioado!", createdTought});
+        } catch (error) {
+            return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
         }
-    }
 
+  
+    }
 
     //getAllComments
     static async getAll(req, res) {

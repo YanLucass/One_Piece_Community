@@ -13,7 +13,7 @@ class Comment {
         try {
             const result = await pool.query(query, values);
             
-            return result.rows;
+            return result.rows[0];
         }
         catch(err) {
             console.error('Erro ao adicionar comentário', err);
@@ -25,7 +25,12 @@ class Comment {
     static async getAllComments(toughtId) {
 
         try {
-            const query = `SELECT * FROM comments WHERE tought_id = $1`
+            const query = 
+            `SELECT comments.*, users.image AS user_image
+             FROM comments
+             INNER JOIN users ON comments.user_id = users.id
+             WHERE comments.tought_id = $1
+            `
             const value = [toughtId];
             const result = await pool.query(query, value);
             return result.rows;

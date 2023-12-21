@@ -116,7 +116,7 @@ function Home() {
   }
 
 
-  
+ 
   
   //use effect to show all comments form toughts
 
@@ -134,8 +134,6 @@ function Home() {
   )
 });
 
-
-  console.log(filteredToughts);
   return (
 
     <div className={styles.container}>
@@ -167,9 +165,8 @@ function Home() {
           <span className={styles.date}>
             {dayjs(tought.created_at).format('DD/MM/YYYY/ HH:mm')}
           </span> 
-              
-          <h2>{tought.title}</h2>
-          <p>{tought.content}</p>
+
+     
 
             {/* quando clicar quero que apaça ese compoenente */}
             <button onClick={() => handleThoughtClick(tought.id)}>Adicionar comentário</button>
@@ -180,20 +177,20 @@ function Home() {
                         allComments.filter(comment => comment.tought_id === tought.id)
                         .map((comment, index) => (
                             <div key={index}> 
-                              {/* show details from comment */}
-                              
-                              <p>{comment.content}</p>
+                              {/* show details from comment user image etc*/}   
+                              <RoundedImage 
+                                width="px45"
+                                src={`${process.env.REACT_APP_API}/images/users/${comment.user_image}`}
+                              />                 
+                                <p>{comment.user_image}</p>
+                                <p>{comment.content}</p>
                               
                             </div>
                         
                         ))  : ''}
-            
-
-                  
                 
             <button onClick={() => getAllComments(tought.id)}>Ver comentários</button>
-
-     
+  
 
           {/* display edit link  for thought owner users */}
           {tought.user_id === user.id && (

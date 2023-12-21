@@ -61,7 +61,7 @@ class Toughts {
         try {
             const query = `SELECT * FROM toughts WHERE id = $1`
             const result = await pool.query(query, [toughtId]);
-            return result.rows;
+            return result.rows[0];
         }
         catch(err) {
             console.error('Erro ao buscar o pensamento por ID:', err);
