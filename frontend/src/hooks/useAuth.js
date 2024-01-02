@@ -93,12 +93,31 @@ export default function useAuth() {
         //remover token
         setAuthenticated(false)
         localStorage.removeItem('token');
+        clearLikesFromLocalStorage();
         //retirar o token da instancia da api
-        api.defaults.headers.Authorization = undefined;
+        api.defaults.headers.Authorization = undefined; 
         setFlashMessage(msgText, msgType);
         navigate('/');
     }
     
+    // clear 'liked' of posts saved in local storage. 
+    function clearLikesFromLocalStorage() {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.includes('liked_')) {
+            keysToRemove.push(key);
+        }
+    }
+
+    // remove keys from keysToRemove
+            keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+    });
+}
+
+
+
 
     return { authenticated, registerUser, login, logout}
  }

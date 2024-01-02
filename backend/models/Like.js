@@ -12,10 +12,11 @@ class Like {
         try {
             const likes = await this.getQtdLike(toughtId);
             let query;
-            const value = [toughtId]
+            const value = [toughtId];
 
-            if(likes.length === 0) {
-                query = `INSERT INTO likes (tought_id, qtd) VALUES ($1, 1)`
+            //if it's the first like of the post.
+            if(!likes) {
+                query = `INSERT INTO likes (tought_id, qtd) VALUES ($1, 1) `
                 await pool.query(query, value);
             }
             else {
@@ -32,10 +33,10 @@ class Like {
 
     static async removeLike(toughtId) {
         try {
+        
             const query = `UPDATE likes SET qtd = qtd -1 WHERE tought_id = $1`
             const value = [toughtId]
             const result = await pool.query(query, value);
-            return result.rows;
         }
         catch(err) {
             console.log('Deu erro ao pegar quantidade de likes', err);
@@ -50,7 +51,7 @@ class Like {
             const query = `SELECT qtd from likes WHERE tought_id = $1`
             const value = [toughtId]
             const result = await pool.query(query, value);
-            return result.rows;
+            return result.rows[0];
         }
         catch(err) {
             console.log('Deu erro ao pegar quantidade de likes', err);

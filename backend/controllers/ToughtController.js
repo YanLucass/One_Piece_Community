@@ -153,11 +153,12 @@ class ToughtController {
         }
 
         try {
-          await Like.removeLike(id);
+          const log = await Like.removeLike(id);
+        
           return res.status(200).json({message: 'Like removido com sucesso'});    
         } 
         catch(err) {
-          return  res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
+          return res.status(500).json({message: "Algo deu errado, tente novamente mais tarde"});
         }
     }
 

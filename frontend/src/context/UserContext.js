@@ -14,3 +14,5 @@ export function UserProvider({ children }) {
         </Context.Provider>
     );
 }
+
+export default Context;

@@ -1,6 +1,8 @@
 import api from '../../../utils/api';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFlashMessage from '../../../hooks/useFlashMessage';
+import Context from '../../../context/UserContext';
 
 import styles from './Archs.module.css';
 //image
@@ -24,6 +26,10 @@ function Wano() {
     //flashMessage
     const {setFlashMessage} = useFlashMessage();
 
+    const { authenticated } = useContext(Context);
+
+    const navigate = useNavigate();
+
     function onChange(e) {
         setToughtArch({...toughtArch, [e.target.name]: e.target.value});
     }
@@ -43,8 +49,6 @@ function Wano() {
           
             const data = response.data.tought;
             setToughtArch(data);
-
-        
         }
         catch(err) {
             msgText = err.response.data.message
@@ -54,13 +58,10 @@ function Wano() {
         setFlashMessage(msgText, msgType);
     }
 
-  
-
-
+    //função para enviar 
     function submit(e) {
         e.preventDefault();
-        save(toughtArch)
-        
+        authenticated ? save(toughtArch) : navigate('/users/login');
     }
 
     //display all wano toughts. Consume getAllWanoToughts router.

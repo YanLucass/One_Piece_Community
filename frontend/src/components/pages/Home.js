@@ -1,17 +1,21 @@
 import api from "../../utils/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from './Home.module.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 //components
 import RoundedImage from '../layout/RoundedImage'
-import Input from '../form/Input';
 import Comment from "./Toughts/Commnet";
+import LikeButton from "../layout/LikeButton";
+
+//context
+import Context from '../../context/UserContext'
 
 // format date
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat'  
+
 dayjs.extend(localizedFormat)
 
 
@@ -20,7 +24,7 @@ dayjs.extend(localizedFormat)
 function Home() {
   const [toughts, setToughts] = useState([]);
   const [user, setUser] = useState({});
-
+  const { authenticated } = useContext(Context);
   const navigate = useNavigate();
 
   // search toughts input
@@ -56,7 +60,7 @@ function Home() {
       }
     }
     fetchData();
-  }, [token])
+  }, [token, authenticated])
   
   //get all thoughts to display on home
   useEffect(() => {
@@ -64,7 +68,7 @@ function Home() {
       .then((response) => {
         setToughts(response.data.toughts);
       })
-  }, []);
+  }, [authenticated]);
 
 
     //get all comments
@@ -114,12 +118,7 @@ function Home() {
   const handleThoughtClick = (toughtId) => {
       setSelectedToughtId(toughtId);
   }
-
-
- 
   
-  //use effect to show all comments form toughts
-
 
   //filter based on the returning term, creating a new array for terms that meet the condition
  const filteredToughts = toughts.filter(tought => {
@@ -138,6 +137,7 @@ function Home() {
 
     <div className={styles.container}>
 
+    {/* input to filter (title, content, author) */}
     <div> 
         <input className={styles.searchInput}
         type='text'
@@ -147,27 +147,32 @@ function Home() {
     />
     </div>
     
-      <h1>Home</h1>
+      <h1>Veja os que os fãs estão discutindo: </h1>
       {/* display  every thought using the array filteredToughts*/}
       {filteredToughts.map((tought, index) => (
-        
-        
+            
         <div className={styles.tought} key={index}>
         
-          {/* display each user photo */}
+          {/* show photo of the user who owns the publication*/}
             <RoundedImage 
                 width='px45'
                 src={`${process.env.REACT_APP_API}/images/users/${tought.user_image}`}
             />
-           <span className={styles.bold}>{tought.user_name}</span> 
-               {/* formart and display timestamp in Brazilian formart */}
 
+           <span className={styles.bold}>{tought.user_name}</span> 
+
+          {/* formart and display timestamp in Brazilian formart */}
           <span className={styles.date}>
             {dayjs(tought.created_at).format('DD/MM/YYYY/ HH:mm')}
           </span> 
 
-     
-
+          {tought.title ? <h3>{tought.title}</h3> : ''}
+          <p>{tought.content}</p>
+          {tought.like_count}
+          {/* handle like button */}
+          <LikeButton 
+              id={tought.id}
+          />
             {/* quando clicar quero que apaça ese compoenente */}
             <button onClick={() => handleThoughtClick(tought.id)}>Adicionar comentário</button>
             {selectedToughtId === tought.id && <Comment id={tought.id} />}  
@@ -196,7 +201,6 @@ function Home() {
             <>
              <p> <Link to={`/toughts/edit/${tought.id}`}>Editar</Link></p>
                 <button onClick={() => deleteThought(tought.id)}>Deletar</button>
-  
             
             </>
            

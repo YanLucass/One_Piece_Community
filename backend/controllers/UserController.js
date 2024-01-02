@@ -108,11 +108,10 @@ class UserController {
         }
          
         try {
-    
-            const token = await createUserToken(user, req, res);
+                                                                                                                           await createUserToken(user, req, res);
         
         } catch(err) {
-            return res.status(500).json({message: "Ocorreu um erro tente novamente mais tarde!"});
+            return res.status(500).json( {message: "Ocorreu um erro tente novamente mais tarde!"});
         }
 
     }
@@ -185,9 +184,9 @@ class UserController {
         const user = await getUserByToken(token);
         delete user.password
         try {
-            res.status(200).json({message: user});
+            return res.status(200).json({message: user});
         } catch(err) {
-            res.status(500).json({message: 'ops algo deu errado, tente mais tarde'});
+            return res.status(500).json({message: 'ops algo deu errado, tente mais tarde'});
         }
        
 
