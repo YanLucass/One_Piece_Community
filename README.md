@@ -1,8 +1,6 @@
 ### One Piece Community
 
-E se existisse um lugar onde os fãs da obra pudessem se encontrar para dar feedbacks sobre a série, criar publicações para demonstrar alguma ideia, teoria apenas interagir?
-Com esse pensamento desenvolvi essa comunidade onde os usuários podem criar contas com fotos personalizadas e a partir daí criar publicações, comentar publicações de outros, dar like, 
-dar feedback sobre alguns arcos da série etc. Essa aplicação ainda será expandida! 
+E se existisse um lugar onde os fãs da obra pudessem se encontrar para dar feedback sobre a série, criar publicações para demonstrar ideias, teorias, ou simplesmente interagir? Com esse pensamento, desenvolvi esta comunidade, onde os usuários podem criar contas com fotos personalizadas e, a partir disso, fazer publicações, comentar as publicações de outros, dar likes, fornecer feedback sobre alguns arcos da série, etc. Esta aplicação ainda será expandida!
 
 Link do projeto em vídeo: https://www.linkedin.com/feed/update/urn:li:activity:7142531903697448960/
 
